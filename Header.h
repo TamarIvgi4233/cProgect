@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #define MAX_LABEL_LEN 31/*אורך התווית*/
 #define MAX_ARR_LEN 150/*אורך המערכים*/
 #define WRD_ARR_BITS_LEN 12/*אורך המחרוזת של הביטים*/
@@ -25,7 +25,7 @@ lbl* label_search( char* str)
 }
 
 typedef enum symbol_type {
-	CODE,
+	CODE=0,
 	DATA,
 	EXTERNAL,
 	ENTRY
@@ -123,12 +123,12 @@ typedef struct Word {
 }Wrd;
 typedef struct Command {
 	char* address;
-	Wrd* word;
+	Wrd word;
 	char tag;
 }Cmd;
 typedef struct Data {
 	char* address;
-	Wrd* word;
+	Wrd word;
 }Data;
 typedef struct { char* string; opcode op_table;funct funct_table; } code;
 static code lookuptable[] = {
