@@ -1,4 +1,4 @@
-﻿#include <math.h>
+#include <math.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -30,7 +30,7 @@ void add_label(lbl* head, char* str, char*adr, symbol_type type)
 	if (tmp == NULL)
 	{
 		tmp = head;
-		while (tmp->next != NULL)/**/
+		while (tmp->next != NULL)
 			tmp = tmp->next;
 		tmp->next = malloc(sizeof(lbl));
 		tmp = tmp->next;
@@ -51,7 +51,7 @@ void init_cmd_array()
 	{
 		cmd_arr[i].address = "0100";
 		for (;j < WRD_ARR_BITS_LEN;j++)
-			cmd_arr[i].word->code[j] = '0';
+			cmd_arr[i].word.code[j] = '0';
 		cmd_arr[i].tag = 'A';
 		i++;
 	}
@@ -65,7 +65,7 @@ void init_data_array()
 	{
 		data_arr[i].address = "0000";
 		for (;j < WRD_ARR_BITS_LEN;j++)
-			data_arr[i].word->code[j] = '0';
+			data_arr[i].word.code[j] = '0';
 		i++;
 	}
 }
