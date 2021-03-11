@@ -77,6 +77,8 @@ bool codeProcessing(line lineCode, int* IC, int i)
 		extraWord(lineCode, j, IC);
 		
 	}
+
+}
 int moveToNotWhiteSpace(line l, int i)
 {
 	while (isspace(l.info[i])&&(i<80))i+=1;
@@ -146,3 +148,111 @@ void extraWord(line lineCode, int i, int* IC)
 		Wrd newWord = cmd_builder(0, 0, src_address, dest_address);
 		cmd_input_arr(newWord, '?', IC);
 	}
+
+}
+bool dataProcessing(line lineData, int* DC, int i)
+{
+	instruction instruc;
+	int j;
+	char temp[MAX_LINE_LENGTH];
+	i = moveToNotWhiteSpace(lineData, i);
+	if (lineData.info[i] != '.')
+	{
+
+		instruc =NONE;
+	}
+	else i += 1;
+	for (j = 0;lineData.info[i] && lineData.info[i] != ' ' && lineData.info[i] != '\n' && lineData.info[i] != '\t';i += 1, j += 1)
+	{
+		temp[j] = lineData.info[i];
+	}
+	temp[j] ='\n';
+	if (strcmp(temp, "data"))
+		return processString(lineData, i, DC);
+	if (strcmp(temp, "string"))
+		return processString(lineData, i, DC);
+	if (strcmp(temp, "entry"))
+		instruc= ENTRY;
+	if (strcmp(temp, "extern"))
+		instruc= EXTERN;
+	else  instruc= ERROR_INST;
+
+	
+}
+bool processString(line lineString, int i, int* DC)
+{
+	int j;
+	char temp[MAX_LINE_LENGTH];
+	char* endQuotationMarks;
+	i = moveToNotWhiteSpace(lineString, i);
+	if (lineString.info[i]!='"') 
+		{
+			printf("Error In % s: % ld : ", lineString.file_name, lineString.line_number);
+			printf("Missing opening quote of string\n");
+			return false;
+			
+		}
+	endQuotationMarks = strrchr(lineString.info, '"');
+		 if (endQuotationMarks==&lineString.info[i]) 
+		 { 
+			
+			printf("Error In % s: % ld : ", lineString.file_name, lineString.line_number);
+			printf("Missing closing quote of string\n");
+			return false;
+		}
+		else
+		 {
+			
+		
+			 for (j = 0;lineString.info[i] && lineString.info[i] != EOF && lineString.info[i] != '\n' && lineString.info[i] != '"';i += 1, j += 1)
+			 {
+				 temp[j] = lineString.info[i];
+			 }
+			
+			temp[j] = '\0';
+			
+			i += 1;
+			for(j = 0;temp[j] != EOF && temp[j] != '\0';j += 1)
+			{
+				Wrd  wordChar;
+				AsciNumber(wordChar.code, temp[j]);
+				data_input_arr(wordChar, DC);
+			}
+			
+			
+		}
+
+	return true;
+}
+
+bool processData(line lineData, int i, int* DC)
+{
+	int j;
+	char temp[MAX_LINE_LENGTH];
+	
+	i = moveToNotWhiteSpace(lineData, i);
+	while (lineData.info[i] && lineData.info[i] != ' ' && lineData.info[i] != '\n' && lineData.info[i] != '\t')
+	{
+		for (j = 0;lineData.info[i] && lineData.info[i] != ' ' && lineData.info[i] != '\n' && lineData.info[i] != '\t' && lineData.info[i] != ',';i += 1, j += 1)
+		{
+			temp[j] = lineData.info[i];
+		}
+		if (ifItInt(temp) == false)
+		{
+			printf("Error In % s: % ld : ", lineData.file_name, lineData.line_number);
+			printf("Expected integer for .data instruction\n");
+			return false;
+				
+		}
+		if (ifItInt(temp) == true)
+		{
+			Wrd number;
+			numberCod(temp, number.code);
+			data_input_arr(number, DC);
+		}
+		i = moveToNotWhiteSpace(lineData, i);
+		if (lineData.info[i] == ',')i += 1;
+		i = moveToNotWhiteSpace(lineData, i);
+	}
+	return true;
+}
