@@ -7,6 +7,11 @@
 
 void main(void)
 {
+	line l;
+	l.info = "stop";
+	int* i;
+	int j = 0;
+	codeProcessing(l, i, j);
 
 }
 lbl* label_search(lbl* head, char* str)
@@ -81,10 +86,10 @@ void bin(char* y, int x)/*converts to binary number */
 		i++;
 	}
 }
-void cmd_builder(Wrd * word, opcode  op , funct fun, addres_type src_address, addres_type dest_address)/*use "bin" to input the binary code in the array,look at the Wrd array in left to right** when we paste we need to paste in reverse*/
+Wrd cmd_builder( opcode  op , funct fun, addres_type src_address, addres_type dest_address)/*use "bin" to input the binary code in the array,look at the Wrd array in left to right** when we paste we need to paste in reverse*/
 {
 	int i;
-	Wrd res;
+	Wrd word;
 	char* op_code;
 	char* funct_b;
 	char* srcAddress;
@@ -110,15 +115,15 @@ void cmd_builder(Wrd * word, opcode  op , funct fun, addres_type src_address, ad
 	i = 0;
 	while (i < 2)
 	{
-		word->code[i] = destAddress[i];
-		word->code[i + 2] = srcAddress[i];
+		word.code[i] = destAddress[i];
+		word.code[i + 2] = srcAddress[i];
 		i++;
 	}
 	i = 0;
 	while (i < 4)
 	{
-		word->code[i + 4] = funct_b[i];
-		word->code[i + 8] = op_code[i];
+		word.code[i + 4] = funct_b[i];
+		word.code[i + 8] = op_code[i];
 		i++;
 	}
 
@@ -194,7 +199,7 @@ void registerCod(char * code, registers *reg)
 		*reg = NONE_REG;
 	}
 }
-void numberCod(char * num)
+void numberCod(char * num, char* binary)
 {
 	bool positve = true;
 	int i = 1;
@@ -223,11 +228,11 @@ void numberCod(char * num)
 		{
 			if (number & sum)
 			{
-				num[i] = '1';
+				binary[i] = '1';
 			}
 			else
 			{
-				num[i] = '0';
+				binary[i] = '0';
 			}
 			number <<= 1;
 			i += 1;
@@ -241,24 +246,24 @@ void numberCod(char * num)
 			{
 				if (number & sum)
 				{
-					num[i] = '1';
+					binary[i] = '1';
 					positve = true;
 				}
 				else
 				{
-					num[i] = '0';
+					binary[i] = '0';
 				}
 			}
 			else
 			{
 				if (number & sum)
 				{
-					num[i] = '0';
+					binary[i] = '0';
 					
 				}
 				else
 				{
-					num[i] = '1';
+					binary[i] = '1';
 				}
 			}
 			number <<= 1;
@@ -266,7 +271,7 @@ void numberCod(char * num)
 		}
 
 	}
-	num[WRD_ARR_BITS_LEN] = '\0';
+	binary[WRD_ARR_BITS_LEN] = '\0';
 }
 addres_type  addressing_type(char * num  )
 	{
@@ -274,7 +279,7 @@ addres_type  addressing_type(char * num  )
 		{
 			return IMMEDIATE;
 		}
-		else if (label_search(num) != NULL)
+		else if (label_search(num) != (lbl*)NULL)
 		{
 			return DIRECT;
 		}
