@@ -9,28 +9,24 @@ typedef struct Label {
 	symbol_type attribute;
 	struct Label* next;
 }lbl;
-lbl* label_search( char* str)
-{
-	lbl* tmp;
-	tmp = NULL;/******/
-	while (tmp != NULL)
-	{
-		if (!strcmp(tmp->symbole, str))
-			return tmp;
-		else
-			tmp = tmp->next;
-	}
-	return tmp;
-
-}
-
+typedef struct Word {
+	char code[WRD_ARR_BITS_LEN];
+}Wrd;
+typedef struct Command {
+	char* address;
+	Wrd word;
+	char tag;
+}Cmd;
+typedef struct Data {
+	char* address;
+	Wrd word;
+}Data;
 typedef enum symbol_type {
 	CODE=0,
 	DATA,
 	EXTERNAL,
 	ENTRY
 } symbol_type;
-
 typedef enum opcodes {
 	MOV_OP = 0,
 	CMP_OP = 1,
@@ -80,11 +76,10 @@ typedef struct machine_word {
 	} word;
 } machine_word;
 typedef struct line {
-	long line_number;
 	char* file_name;
+	long line_number;
 	char* info;
 } line;
-
 typedef enum addres_type {
 
 	IMMEDIATE = 0,
@@ -116,27 +111,57 @@ typedef enum instruction {
 	NONE,
 	ERROR_INST
 } instruction;
-
-
-typedef struct Word {
-	char code[WRD_ARR_BITS_LEN];
-}Wrd;
-typedef struct Command {
-	char* address;
-	Wrd word;
-	char tag;
-}Cmd;
-typedef struct Data {
-	char* address;
-	Wrd word;
-}Data;
-typedef struct { char* string; opcode op_table;funct funct_table; } code;
 static code lookuptable[] = {
 	{"mov", MOV_OP, MOV_FUNCT},{"cmp",CMP_OP, CMP_FUNCT},{"add",ADD_OP, ADD_FUNCT},{"sub",SUB_OP, SUB_FUNCT},{"lea",LEA_OP, LEA_FUNCT},
 	{"clr",CLR_OP, CLR_FUNCT},{"not",NOT_OP, NOT_FUNCT},{"inc",INC_OP, INC_FUNCT},{"dec",DEC_OP, DEC_FUNCT},{"jmp",JMP_OP, JMP_FUNCT},
 	{"bne",BNE_OP, BNE_FUNCT},{"jsr",JSR_OP, JSR_FUNCT},{"red",RED_OP, RED_FUNCT},{"prn",PRN_OP, PRN_FUNCT},{"rts",RTS_OP, RTS_FUNCT},
 	{"stop",STOP_OP, STOP_FUNCT}
 };
-bool ifItInt(char* );
 
+Cmd cmd_arr[MAX_ARR_LEN];
+Data data_arr[MAX_ARR_LEN];
+
+void data_input_arr(Wrd word_in, int* DC)/*הכנסה למערך נתונים*/
+{
+
+	data_arr[(*DC)].word = word_in;
+	data_arr[(*DC)].address[0] = '0' + ((*DC) / 1000);
+	data_arr[(*DC)].address[1] = '0' + (((*DC) % 1000) / 100);
+	data_arr[(*DC)].address[2] = '0' + (((*DC) % 100) / 10);
+	data_arr[(*DC)].address[3] = '0' + ((*DC) % 10);
+	(*DC) += 1;
+}
+void cmd_input_arr(Wrd word_in, char tag_in, int* IC)/*הכנסה למערך הוראות*/
+{
+	cmd_arr[(*IC)].word = word_in;
+	cmd_arr[(*IC)].tag = tag_in;
+	cmd_arr[(*IC)].address[0] = '0' + ((*IC) / 1000);
+	cmd_arr[(*IC)].address[1] = '0' + (((*IC) % 1000) / 100);
+	cmd_arr[(*IC)].address[2] = '0' + (((*IC) % 100) / 10);
+	cmd_arr[(*IC)].address[3] = '0' + ((*IC) % 10);
+	(*IC) += 1;
+}
+lbl* label_search(char* str)
+{
+	lbl* tmp;
+	tmp = NULL;
+	while (tmp != NULL)
+	{
+		if (!strcmp(tmp->symbole, str))
+			return tmp;
+		else
+			tmp = tmp->next;
+	}
+	return tmp;
+
+}
+
+bool codeProcessing(line , int* , int );
+typedef struct { char* string; opcode op_table;funct funct_table; } code;
+bool ifItInt(char* );
+void op_funct_code(char*, opcode*, funct*);
+addres_type  addressing_type(char*);
+void bin(char*, int);
+void extraWord(line , int , int* );
+Wrd cmd_builder(opcode, funct f, addres_type, addres_type);
 
