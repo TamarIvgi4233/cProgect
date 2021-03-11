@@ -3,6 +3,7 @@
 #define MAX_ARR_LEN 150/*אורך המערכים*/
 #define WRD_ARR_BITS_LEN 12/*אורך המחרוזת של הביטים*/
 #define TABLE_SIZE (sizeof(lookuptable)/sizeof(code))
+#define MAX_LINE_LENGTH 80
 typedef struct Label {
 	char* symbole;
 	char* address;
@@ -124,7 +125,7 @@ Data data_arr[MAX_ARR_LEN];
 void data_input_arr(Wrd word_in, int* DC)/*הכנסה למערך נתונים*/
 {
 
-	data_arr[(*DC)].word = word_in;
+	strcpy(data_arr[(*DC)].word.code , word_in.code);
 	data_arr[(*DC)].address[0] = '0' + ((*DC) / 1000);
 	data_arr[(*DC)].address[1] = '0' + (((*DC) % 1000) / 100);
 	data_arr[(*DC)].address[2] = '0' + (((*DC) % 100) / 10);
@@ -165,3 +166,4 @@ void bin(char*, int);
 void extraWord(line , int , int* );
 Wrd cmd_builder(opcode, funct f, addres_type, addres_type);
 
+void AsciNumber(char*, char);
