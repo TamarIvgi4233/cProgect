@@ -254,5 +254,11 @@ bool processData(line lineData, int i, int* DC)
 		if (lineData.info[i] == ',')i += 1;
 		i = moveToNotWhiteSpace(lineData, i);
 	}
-	return true;
+	if (lineData.info[i - 1] == ',')
+	{
+		printf("Error In % s: % ld : ", lineData.file_name, lineData.line_number);
+		printf("Expected integer for .data instruction\n");
+		return false;
+	}
+		return true;
 }
