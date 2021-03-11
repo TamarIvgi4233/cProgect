@@ -54,7 +54,7 @@ bool codeProcessing(line lineCode, int* IC, int i)
 	}
 	if (operandsNum == 1)
 	{
-		moveToNotWhiteSpace(lineCode, i);
+		i=moveToNotWhiteSpace(lineCode, i);
 		dest_address = addressing_type(lineCode.info + i);
 		Wrd newWord = cmd_builder(op, fun, src_address, dest_address);
 		cmd_input_arr(newWord, 'A', IC);
@@ -63,13 +63,13 @@ bool codeProcessing(line lineCode, int* IC, int i)
 	}
 	if (operandsNum == 2)
 	{
-		moveToNotWhiteSpace(lineCode, i);
+		i=moveToNotWhiteSpace(lineCode, i);
 		src_address = addressing_type(lineCode.info + i);		
 		while (isspace(lineCode.info[j]) == 0)	j += 1;
-		moveToNotWhiteSpace(lineCode, j);
+		j=moveToNotWhiteSpace(lineCode, j);
 		if (lineCode.info[j] == ',')j += 1;
 		else return;
-		moveToNotWhiteSpace(lineCode, j);
+		j=moveToNotWhiteSpace(lineCode, j);
 		dest_address = addressing_type(lineCode.info + j);
 		Wrd newWord = cmd_builder(op, fun, src_address, dest_address);
 		cmd_input_arr(newWord, 'A', IC);
@@ -77,8 +77,6 @@ bool codeProcessing(line lineCode, int* IC, int i)
 		extraWord(lineCode, j, IC);
 		
 	}
-
-}
 int moveToNotWhiteSpace(line l, int i)
 {
 	while (isspace(l.info[i])&&(i<80))i+=1;
