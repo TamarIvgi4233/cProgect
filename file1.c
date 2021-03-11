@@ -7,12 +7,7 @@
 
 void main(void)
 {
-	line l;
-	l.info = "stop";
-	int* i;
-	int j = 0;
-	codeProcessing(l, i, j);
-
+	
 }
 lbl* label_search(lbl* head, char* str)
 {
@@ -155,25 +150,25 @@ void HexaNumber (char * hexaNum )
 	hexaNum[3] = '\0';
 	
 }
-void AsciNumber(char * asci)
+void AsciNumber(char* word, char asci)
 {
 	unsigned short int sing  = 1; 
-	char c = asci[0];
+	
 	int j = WRD_ARR_BITS_LEN - 1;
 	while (j>=0)
 	{
-		if (c & sing)
+		if (asci & sing)
 		{
-			asci[j] = '1';
+			word[j] = '1';
 		}
 		else
 		{
-			asci[j] = '0';
+			word[j] = '0';
 		}
 		sing <<= 1;
 		j -= 1;
 	}
-	asci[WRD_ARR_BITS_LEN] = '\0';
+	word[WRD_ARR_BITS_LEN] = '\0';
 }
 void registerCod(char * code, registers *reg)
 {
