@@ -23,9 +23,15 @@ lbl* label_search(lbl* head, char* str)
 	return tmp;
 
 }
-void add_label(lbl* head, char* str, char*adr, symbol_type type)
+void add_label(lbl* head, char* str, int *DC, symbol_type type)
 {
 	lbl* tmp;
+	char adr[4];
+	adr[0] = '0' + ((*DC) / 1000);
+	adr[1] = '0' + (((*DC) % 1000) / 100);
+	adr[2] = '0' + (((*DC) % 100) / 10);
+	adr[3] = '0' + ((*DC) % 10);
+	(*DC) += 1;
 	tmp = label_search(head, str);
 	if (tmp == NULL)
 	{
