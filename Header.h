@@ -144,7 +144,7 @@ void cmd_input_arr(Wrd word_in, char tag_in, int* IC)/*הכנסה למערך ה�
 }
 lbl* label_search(char* str)
 {
-	lbl* tmp;
+	lbl* tmp = (lbl*)malloc(sizeof(lbl));
 	tmp = NULL;
 	while (tmp != NULL)
 	{
@@ -165,5 +165,5 @@ addres_type  addressing_type(char*);
 void bin(char*, int);
 void extraWord(line , int , int* );
 Wrd cmd_builder(opcode, funct f, addres_type, addres_type);
-
+void add_label(lbl* , char* , int* , symbol_type );
 void AsciNumber(char*, char);
