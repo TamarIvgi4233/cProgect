@@ -16,7 +16,7 @@ bool ifItInt(char* string)
 if(i > 0)return true;
 else return false;
 }
-bool codeProcessing(line lineCode, int* IC, int i)
+bool codeProcessing(line lineCode, int i, int* IC)
 {
 	int j;
 	int operandsNum;
@@ -224,7 +224,6 @@ bool processString(line lineString, int i, int* DC)
 
 	return true;
 }
-
 bool processData(line lineData, int i, int* DC)
 {
 	int j;
@@ -261,4 +260,99 @@ bool processData(line lineData, int i, int* DC)
 		return false;
 	}
 		return true;
+}
+bool proceesLine(line currLine, int* DC, int* IC, lbl* head)
+{
+	int i = 0;
+	int j;
+	bool addLabel = false;
+	char lableName[MAX_LINE_LENGTH];
+	char temp[MAX_LINE_LENGTH];
+	lbl* labelWord = ((lbl*)malloc(sizeof(lbl)));
+	bool proceesSuccessful = true;
+	i = moveToNotWhiteSpace(currLine, i);
+	if (i > MAX_LINE_LENGTH)
+	{
+		return true;
+	}
+	for (j = 0;currLine.info[i] && currLine.info[i] != ' ' && currLine.info[i] != '\n' && currLine.info[i] != '\t' && currLine.info[i] != EOF;i += 1, j += 1)
+	{
+		temp[j] = currLine.info[i];
+	}
+	if (temp[j - 1] == ':')
+	{
+		strcpy(lableName, temp);
+		lableName[j - 1] = '\n';
+		labelWord = label_search(lableName);
+		if (labelWord == NULL||labelWord->attribute==ENTRY)
+		{
+			addLabel = true;
+			i = moveToNotWhiteSpace(currLine, i);
+		}
+		else
+		{
+			printf("Error In % s: % ld : ", currLine.file_name, currLine.line_number);
+			printf(" Attempt to define an existing label \n");
+			return false;
+		}
+	}
+	else
+	{
+		i = moveToNotWhiteSpace(currLine, 0);
+		
+	}
+	if (currLine.info[i] == '.')
+	{
+		i += 1;
+		for (j = i;currLine.info[i] && currLine.info[i] != ' ' && currLine.info[i] != '\n' && currLine.info[i] != '\t' && currLine.info[i] != EOF;i += 1, j += 1)
+		{
+			temp[j] = currLine.info[i];
+		}
+		temp[j] = '\n';
+		if (strcmp(temp, "data"))
+		{
+			if(addLabel)
+			{
+				add_label(head, lableName, DC, DATA);
+			}
+			proceesSuccessful= processData(currLine, i, DC);
+		}
+		else if (strcmp(temp, "string"))
+		{
+			if (addLabel)
+			{
+				add_label(head, lableName, DC, STRING);
+			}
+			proceesSuccessful = processString(currLine, i, DC);
+		}
+		else if (strcmp(temp, "entry"))
+		{
+			i = moveToNotWhiteSpace(currLine,i);
+			for (j = 0;currLine.info[i] && currLine.info[i] != ' ' && currLine.info[i] != '\n' && currLine.info[i] != '\t' && currLine.info[i] != EOF;i += 1, j += 1)
+			{
+				lableName[j] = currLine.info[i];
+			}
+			lableName[j] = '\n';
+			if (addLabel)
+			{
+				add_label(head, lableName, DC, ENTRY);
+			}
+			
+			
+		}
+		else if (strcmp(temp, "extren"))
+		{
+			if (addLabel)
+			{
+				add_label(head, lableName, DC, EXTERN);
+			}
+			
+			
+		}
+	}
+	else
+	{
+		proceesSuccessful = codeProcessing(currLine, i, IC);
+	}
+	
 }
