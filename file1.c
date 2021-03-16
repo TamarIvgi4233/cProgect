@@ -23,7 +23,7 @@ lbl* label_search(lbl* head, char* str)
 	return tmp;
 
 }
-void add_label(lbl* head, char* str, int *DC, symbol_type type)
+lbl * add_label(lbl* head, char* str, int *DC, symbol_type type)
 {
 	lbl* tmp;
 	char adr[4];
@@ -32,46 +32,59 @@ void add_label(lbl* head, char* str, int *DC, symbol_type type)
 	adr[2] = '0' + (((*DC) % 100) / 10);
 	adr[3] = '0' + ((*DC) % 10);
 	(*DC) += 1;
-	tmp = label_search(head, str);
-	if (tmp == NULL)
+	tmp = head;
+	
+	if(tmp==NULL)
 	{
-		tmp = head;
+	    head=malloc(sizeof(lbl));
+	    head->symbole = malloc(MAX_LABEL_LEN * sizeof(char));
+	    head->address = malloc(4 * sizeof(char));
+		strcpy(head->symbole, str);
+		strcpy(head->address, adr);
+		head->attribute = type;
+		tmp=head->next;
+	}
+	else
+	{
 		while (tmp->next != NULL)
-			tmp = tmp->next;
-		tmp->next = malloc(sizeof(lbl));
+		    tmp = tmp->next;
+		tmp->next =malloc(sizeof(lbl)); 
 		tmp = tmp->next;
 		tmp->symbole = malloc(MAX_LABEL_LEN * sizeof(char));
-		tmp->address = malloc(MAX_LABEL_LEN * sizeof(char));
+		tmp->address = malloc(4 * sizeof(char));
 		strcpy(tmp->symbole, str);
 		strcpy(tmp->address, adr);
 		tmp->attribute = type;
-		tmp->next = NULL;
+		tmp=tmp->next;
 	}
+	return head;
 }
 void init_cmd_array()
 {
 	int i, j;
 	i = j = 0;
-	Cmd cmd_arr[MAX_ARR_LEN];
 	while (i < MAX_ARR_LEN)
 	{
-		cmd_arr[i].address = "0100";
-		for (;j < WRD_ARR_BITS_LEN;j++)
+	    cmd_arr[i].address=(char *)malloc(4*sizeof(char));
+		cmd_arr[i].address="0100";
+		for (j=0;j < WRD_ARR_BITS_LEN;j++)
 			cmd_arr[i].word.code[j] = '0';
 		cmd_arr[i].tag = 'A';
 		i++;
 	}
+	
 }
+
 void init_data_array()
 {
 	int i, j;
 	i = j = 0;
-	Data data_arr[MAX_ARR_LEN];
 	while (i < MAX_ARR_LEN)
 	{
+	    data_arr[i].address=malloc(4*sizeof(char));
 		data_arr[i].address = "0000";
-		for (;j < WRD_ARR_BITS_LEN;j++)
-			data_arr[i].word.code[j] = '0';
+		for (j=0;j < WRD_ARR_BITS_LEN;j++)
+		    data_arr[i].word.code[j] = '0';
 		i++;
 	}
 }
