@@ -52,28 +52,26 @@ void init_cmd_array()
 {
 	int i, j;
 	i = j = 0;
+	Cmd cmd_arr[MAX_ARR_LEN];
 	while (i < MAX_ARR_LEN)
 	{
-	    cmd_arr[i].address=(char *)malloc(4*sizeof(char));
-		cmd_arr[i].address="0100";
-		for (j=0;j < WRD_ARR_BITS_LEN;j++)
+		cmd_arr[i].address = "0100";
+		for (;j < WRD_ARR_BITS_LEN;j++)
 			cmd_arr[i].word.code[j] = '0';
 		cmd_arr[i].tag = 'A';
 		i++;
 	}
-	
 }
-
 void init_data_array()
 {
 	int i, j;
 	i = j = 0;
+	Data data_arr[MAX_ARR_LEN];
 	while (i < MAX_ARR_LEN)
 	{
-	    data_arr[i].address=malloc(4*sizeof(char));
 		data_arr[i].address = "0000";
-		for (j=0;j < WRD_ARR_BITS_LEN;j++)
-		    data_arr[i].word.code[j] = '0';
+		for (;j < WRD_ARR_BITS_LEN;j++)
+			data_arr[i].word.code[j] = '0';
 		i++;
 	}
 }
@@ -88,6 +86,19 @@ void bin(char* y, int x)/*converts to binary number */
 		x = x / 2;
 		i++;
 	}
+}
+int binToDecimal(char* bin)
+{
+	int x = 0;
+	int i = 0;
+	while (i < 12)
+	{
+		if (bin[i] == '1')
+		{
+			x += (1 << i);
+		}
+	}
+	return x;
 }
 Wrd cmd_builder( opcode  op , funct fun, addres_type src_address, addres_type dest_address)/*use "bin" to input the binary code in the array,look at the Wrd array in left to right** when we paste we need to paste in reverse*/
 {
