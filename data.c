@@ -31,26 +31,28 @@ void init_cmd_array()
 {
 	int i, j;
 	i = j = 0;
-	
 	while (i < MAX_ARR_LEN)
 	{
-		cmd_arr[i].address = "0100";
-		for (;j < WRD_ARR_BITS_LEN;j++)
+	    cmd_arr[i].address=(char *)malloc(4*sizeof(char));
+		cmd_arr[i].address="0100";
+		for (j=0;j < WRD_ARR_BITS_LEN;j++)
 			cmd_arr[i].word.code[j] = '0';
 		cmd_arr[i].tag = 'A';
 		i++;
 	}
+	
 }
+
 void init_data_array()
 {
 	int i, j;
 	i = j = 0;
-
 	while (i < MAX_ARR_LEN)
 	{
+	    data_arr[i].address=malloc(4*sizeof(char));
 		data_arr[i].address = "0000";
-		for (;j < WRD_ARR_BITS_LEN;j++)
-			data_arr[i].word.code[j] = '0';
+		for (j=0;j < WRD_ARR_BITS_LEN;j++)
+		    data_arr[i].word.code[j] = '0';
 		i++;
 	}
 }
