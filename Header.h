@@ -4,6 +4,7 @@
 #define WRD_ARR_BITS_LEN 12/*אורך המחרוזת של הביטים*/
 #define TABLE_SIZE (sizeof(lookuptable)/sizeof(code))
 #define MAX_LINE_LENGTH 80
+#define IcStart 100
 typedef struct Label {
 	char* symbole;
 	char* address;
@@ -167,3 +168,17 @@ void extraWord(line , int , int* );
 Wrd cmd_builder(opcode, funct f, addres_type, addres_type);
 void add_label(lbl* , char* , int* , symbol_type );
 void AsciNumber(char*, char);
+int binToDecimal(char*);
+void updateAdrressData(int ICF)
+{
+	int i;
+	int add = 0;
+	char* temp = (char*)malloc(sizeof(char));
+	for (i = 0;i < ICF - IcStart;i += 1)
+	{
+		add=binToDecimal(cmd_arr[i].address);
+		bin(temp, i+add);
+		strcpy(cmd_arr->address, temp);
+	}
+	free(temp);
+}
