@@ -105,6 +105,10 @@ Wrd* cmd_builder( opcode  op , funct fun, addres_type src_address, addres_type d
 		word->code[i + 8] = op_code[i];
 		i++;
 	}
+	free(op_code);
+	free(funct_b);
+	free(srcAddress);
+	free(destAddress);
 	return word;
 }
 void updateAdrressData(int ICF)
