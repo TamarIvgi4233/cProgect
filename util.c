@@ -104,16 +104,14 @@ void bin(char* y, int x)/*converts to binary number */
 }
 int binToDecimal(char* bin)
 {
-	int x = 0;
+    int x = 0;
 	int i = 0;
 	while (i < 12)
 	{
-		if (bin[i] == '1')
-		{
-			x += (1 << i);
-		}
+        x+=((bin[i]-'0')*pow(2,11-i));  
+	    i++;
 	}
-	return x;
+    return x;
 }
 void HexaNumber(char* hexaNum)
 {
