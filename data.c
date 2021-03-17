@@ -9,22 +9,31 @@
 
 void data_input_arr(Wrd word_in, int* DC)/*הכנסה למערך נתונים*/
 {
-
-	strcpy(data_arr[(*DC)].word.code, word_in.code);
-	data_arr[(*DC)].address[0] = '0' + ((*DC) / 1000);
-	data_arr[(*DC)].address[1] = '0' + (((*DC) % 1000) / 100);
-	data_arr[(*DC)].address[2] = '0' + (((*DC) % 100) / 10);
-	data_arr[(*DC)].address[3] = '0' + ((*DC) % 10);
+    char const digit[] = "0123456789";
+	int i,f;
+	f=(*DC);
+	for(i=0;i<WRD_ARR_BITS_LEN;i++)
+	    data_arr[f].word.code[i]= word_in.code[i];
+	data_arr[f].address=(char *) realloc(data_arr[f].address,4);
+	data_arr[f].address[0]=digit[(f / 1000)];
+    data_arr[f].address[1]=digit[((f % 1000) / 100)];
+    data_arr[f].address[2]=digit[((f % 100) / 10)];
+    data_arr[f].address[3]=digit[(f % 10)];
 	(*DC) += 1;
 }
 void cmd_input_arr(Wrd word_in, char tag_in, int* IC)/*הכנסה למערך הוראות*/
 {
-	cmd_arr[(*IC)].word = word_in;
-	cmd_arr[(*IC)].tag = tag_in;
-	cmd_arr[(*IC)].address[0] = '0' + ((*IC) / 1000);
-	cmd_arr[(*IC)].address[1] = '0' + (((*IC) % 1000) / 100);
-	cmd_arr[(*IC)].address[2] = '0' + (((*IC) % 100) / 10);
-	cmd_arr[(*IC)].address[3] = '0' + ((*IC) % 10);
+    char const digit[] = "0123456789";
+	int i,f;
+    f=(*IC);
+    for(i=0;i<WRD_ARR_BITS_LEN;i++)
+	    cmd_arr[f].word.code[i]= word_in.code[i];
+	cmd_arr[f].tag = tag_in;
+	cmd_arr[f].address=(char *) realloc(cmd_arr[f].address,4);
+	cmd_arr[f].address[0]=digit[(f / 1000)];
+    cmd_arr[f].address[1]=digit[((f % 1000) / 100)];
+    cmd_arr[f].address[2]=digit[((f % 100) / 10)];
+    cmd_arr[f].address[3]=digit[(f % 10)];
 	(*IC) += 1;
 }
 void init_cmd_array()
@@ -34,7 +43,7 @@ void init_cmd_array()
 	while (i < MAX_ARR_LEN)
 	{
 	    cmd_arr[i].address=(char *)malloc(4*sizeof(char));
-		cmd_arr[i].address="0100";
+		strcpy(cmd_arr[i].address,"0100");
 		for (j=0;j < WRD_ARR_BITS_LEN;j++)
 			cmd_arr[i].word.code[j] = '0';
 		cmd_arr[i].tag = 'A';
@@ -50,7 +59,7 @@ void init_data_array()
 	while (i < MAX_ARR_LEN)
 	{
 	    data_arr[i].address=malloc(4*sizeof(char));
-		data_arr[i].address = "0000";
+		strcpy(data_arr[i].address ,"0000");
 		for (j=0;j < WRD_ARR_BITS_LEN;j++)
 		    data_arr[i].word.code[j] = '0';
 		i++;
