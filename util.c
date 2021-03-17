@@ -296,4 +296,33 @@ void op_funct_code(char* key, opcode* op, funct* fun)
 		}
 	}
 }
-
+void data_free_arr()
+{
+    int c=0;
+    while(c<MAX_ARR_LEN)
+    {
+        free(data_arr[c].address);
+        c++;
+    }
+}
+void cmd_free_arr()
+{
+    int c=0;
+    while(c<MAX_ARR_LEN)
+    {
+        free(cmd_arr[c].address);
+        c++;
+    }
+}
+void label_free(lbl *head)
+{
+    lbl *tmp;
+    tmp=head;
+    while(tmp!=NULL)
+    {
+        free(tmp->symbole);
+        free(tmp->address);
+        tmp=tmp->next;
+    }
+    free(head);
+}
