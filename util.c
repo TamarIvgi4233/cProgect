@@ -36,7 +36,7 @@ int countOperands(line l, int i)
 	}
 	return count;
 }
-bool rightOperans(opcode op, int number)
+int rightOperans(opcode op, int number)
 {
 	if (op<5)
 	{
@@ -52,7 +52,7 @@ bool rightOperans(opcode op, int number)
 	}
 	else
 	{
-		return false;
+		return 1;
 	}
 }
 void extraWord(line lineCode, int i, int* IC)
