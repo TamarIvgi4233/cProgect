@@ -5,17 +5,18 @@
 #include <string.h>
 #include "Header.h"
 #include "util.h"
-bool ifItInt(char* string)
+int ifItInt(char* string)
 {
 	int i = 0;
+	int bool=0;
 	if (string[0] == '-' || string[0] == '+') string++; 
 	for (; string[i]; i++)
-		if (isdigit(string[i]))
+		if (!isdigit(string[i]))
 		{
-			return false;
+			return 1;
 		}
-if(i > 0)return true;
-else return false;
+if(i > 0)return 0;
+else return 1;
 }
 int moveToNotWhiteSpace(line l, int i)
 {
