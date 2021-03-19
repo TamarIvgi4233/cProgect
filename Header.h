@@ -106,6 +106,11 @@ typedef enum instruction {
 	NONE,
 	ERROR_INST
 } instruction;
+typedef struct code {
+	char* string;
+	opcode op_table;
+	funct funct_table;
+}code;
 static code lookuptable[] = {
 	{"mov", MOV_OP, MOV_FUNCT},{"cmp",CMP_OP, CMP_FUNCT},{"add",ADD_OP, ADD_FUNCT},{"sub",SUB_OP, SUB_FUNCT},{"lea",LEA_OP, LEA_FUNCT},
 	{"clr",CLR_OP, CLR_FUNCT},{"not",NOT_OP, NOT_FUNCT},{"inc",INC_OP, INC_FUNCT},{"dec",DEC_OP, DEC_FUNCT},{"jmp",JMP_OP, JMP_FUNCT},
