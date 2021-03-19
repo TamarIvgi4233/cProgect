@@ -342,29 +342,29 @@ char *intToString(int k)
     }
     return x;
 }
-int checkEntry(head)
+bool checkingEntry(lbl *head)
 {
     lbl *lblTmp;
     lblTmp=head;
     while(lblTmp!=NULL)
 	    {
-	     if(lblTmp.attribute==ENTRY)
-	         return 1;//true
+	     if(lblTmp->attribute==ENTRY)
+	         return true;
 	     lblTmp=lblTmp->next;
 	    }
-	    return 0;//false;
+	    return false;
 }
-int checkExternal(head)
+bool checkingExternal(lbl *head)
 {
     lbl *lblTmp;
     lblTmp=head;
     while(lblTmp!=NULL)
 	    {
-	     if(lblTmp.attribute==EXTERNAL)
-	         return 1;//true
+	     if(lblTmp->attribute==EXTERNAL)
+	         return true;
 	     lblTmp=lblTmp->next;
 	    }
-	    return 0;//false;
+	    return false;
 }
 bool is_instruction(char* str)
 {
