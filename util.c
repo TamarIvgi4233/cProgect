@@ -162,7 +162,9 @@ void AsciNumber(char* word, char asci)
 }
 void registerCod(char* code, registers* reg)
 {
-	if (code[0] == 'r' && (code[1] >= 0 && code[1] <= 7) && code[2] == '\n')
+	int i = code[1] - '0' ;
+	char c = code[2];
+	if (code[0] == 'r' && ((code[1]-'0' )>= 0 && (code[1] - '0') <= 7) && code[2] == '\0')
 	{
 
 		switch (code[1])
