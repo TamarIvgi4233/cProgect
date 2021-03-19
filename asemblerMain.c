@@ -71,7 +71,7 @@ bool fileProcess(char* fileName)
 		DCF = DC;
 		IC = IcStart;
 		DC = 0;
-		updateAdrressData(ICF);
+		updateAdrressData(ICF,DCF);
 		rewind(currFile);
 		while (fgets(currLine.info, MAX_LINE_LENGTH + 1, currFile))
 		{
