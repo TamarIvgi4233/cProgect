@@ -116,26 +116,27 @@ int binToDecimal(char* bin)
 char* HexaNumber(char* hexaNum)
 {
 
-	int i = WRD_ARR_BITS_LEN-1;
-	int j, count = 2;
+	int i = 0;
+	int j, count = 0;
 	int sum = 0;
 	static char* hex = "0123456789ABCDEF";
-	while (count >= 0)
+	while (count <=2)
 	{
-		for (j = 0;j < 4; j += 1)
+		for (j = 3;j >=0 ; j -= 1)
 		{
+			char c = hexaNum[i];
 			if (hexaNum[i] == '1')
 			{
 				sum += (1 << j);
 
 			}
-			i -= 1;
+			i += 1;
 		}
 
 		hexaNum[count] = hex[sum];
 		sum = 0;
 
-		count -= 1;
+		count += 1;
 	}
 	hexaNum[3] = '\0';
 
