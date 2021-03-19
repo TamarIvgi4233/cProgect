@@ -69,15 +69,7 @@ typedef enum funct {
 
 	
 } funct;
-typedef struct machine_word {
-	
-	short length;
 
-	union word {
-		Data* data;
-		Wrd*  code;
-	} word;
-} machine_word;
 typedef struct line {
 	char* file_name;
 	long line_number;
