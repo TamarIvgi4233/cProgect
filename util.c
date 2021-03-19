@@ -370,3 +370,9 @@ int checkExternal(head)
 	    }
 	    return 0;//false;
 }
+bool is_instruction(char* str)
+{
+	if (strcmp(str, "data") || strcmp(str, "string") || strcmp(str, "extern") || strcmp(str, "entry"))
+		return true;
+	else return false;
+}
