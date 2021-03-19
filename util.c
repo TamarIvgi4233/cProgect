@@ -113,9 +113,9 @@ int binToDecimal(char* bin)
 	}
     return x;
 }
-char* HexaNumber(char* hexaNum)
+char* HexaNumber(char* number)
 {
-
+	char* hexaNum = (char*)malloc(WRD_ARR_BITS_LEN * sizeof(char));
 	int i = 0;
 	int j, count = 0;
 	int sum = 0;
@@ -124,8 +124,8 @@ char* HexaNumber(char* hexaNum)
 	{
 		for (j = 3;j >=0 ; j -= 1)
 		{
-			char c = hexaNum[i];
-			if (hexaNum[i] == '1')
+			
+			if (number[i] == '1')
 			{
 				sum += (1 << j);
 
@@ -139,7 +139,7 @@ char* HexaNumber(char* hexaNum)
 		count += 1;
 	}
 	hexaNum[3] = '\0';
-
+	return hexaNum;
 }
 void AsciNumber(char* word, char asci)
 {
