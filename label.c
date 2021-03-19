@@ -67,3 +67,20 @@ bool valid_label_name(char* labelName)
 	}
 	return false;
 }
+void updateAdrresslabel(int ICF,lbl* head)
+{
+	
+	int add = 0;
+	char* temp = (char*)malloc(sizeof(char));
+	while(head!=NULL)
+	{
+		if (head->attribute == DATA || head->attribute == STRING)
+		{
+			add = binToDecimal(head->address);
+			bin(temp, ICF + add);
+			strcpy(cmd_arr->address, temp);
+		}
+		head = head->next;
+	}
+	free(temp);
+}
