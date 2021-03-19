@@ -20,39 +20,39 @@ lbl* label_search(lbl* head, char* str)
 	return tmp;
 
 }
-lbl * add_label(lbl* head, char* str, int *DC, symbol_type type)
+lbl* add_label(lbl* head, char* str, int* DC, symbol_type type)
 {
 	lbl* tmp;
-	char adr[4];
+	char *adr = (char*)malloc(4 * sizeof(char));
 	adr[0] = '0' + ((*DC) / 1000);
 	adr[1] = '0' + (((*DC) % 1000) / 100);
 	adr[2] = '0' + (((*DC) % 100) / 10);
 	adr[3] = '0' + ((*DC) % 10);
 	(*DC) += 1;
 	tmp = head;
-	
-	if(tmp==NULL)
+
+	if (tmp == NULL)
 	{
-	    head=malloc(sizeof(lbl));
-	    head->symbole = malloc(MAX_LABEL_LEN * sizeof(char));
-	    head->address = malloc(4 * sizeof(char));
+		head = malloc(sizeof(lbl));
+		head->symbole = malloc(MAX_LABEL_LEN * sizeof(char));
+		head->address = malloc(4 * sizeof(char));
 		strcpy(head->symbole, str);
 		strcpy(head->address, adr);
 		head->attribute = type;
-		tmp=head->next;
+		tmp = head->next;
 	}
 	else
 	{
 		while (tmp->next != NULL)
-		    tmp = tmp->next;
-		tmp->next =malloc(sizeof(lbl)); 
+			tmp = tmp->next;
+		tmp->next = malloc(sizeof(lbl));
 		tmp = tmp->next;
 		tmp->symbole = malloc(MAX_LABEL_LEN * sizeof(char));
 		tmp->address = malloc(4 * sizeof(char));
 		strcpy(tmp->symbole, str);
 		strcpy(tmp->address, adr);
 		tmp->attribute = type;
-		tmp=tmp->next;
+		tmp = tmp->next;
 	}
 	return head;
 }
