@@ -11,8 +11,8 @@ bool proceesLine(line currLine, int* DC, int* IC, lbl* head)
 	int i = 0;
 	int j;
 	bool addLabel = false;
-	char lableName[MAX_LINE_LENGTH];
-	char temp[MAX_LINE_LENGTH];
+	char* lableName = (char*) malloc(MAX_LINE_LENGTH * sizeof(char));
+	char *temp= (char*)malloc(MAX_LINE_LENGTH * sizeof(char));
 	lbl* labelWord = ((lbl*)malloc(sizeof(lbl)));
 	bool proceesSuccessful = true;
 	i = moveToNotWhiteSpace(currLine, i);
@@ -29,7 +29,7 @@ bool proceesLine(line currLine, int* DC, int* IC, lbl* head)
 		strcpy(lableName, temp);
 		lableName[j - 1] = '\n';
 		labelWord = label_search(lableName);
-		if (labelWord == NULL || labelWord->attribute == ENTRY)
+		if (labelWord == NULL || labelWord->attribute == ENTRY|| valid_label_name(lableName))
 		{
 			addLabel = true;
 			i = moveToNotWhiteSpace(currLine, i);
@@ -106,6 +106,10 @@ bool proceesLine(line currLine, int* DC, int* IC, lbl* head)
 	}
 	else
 	{
+		if (addLabel)
+		{
+			head = add_label(head, lableName, IC, CODE);
+		}
 		return codeProcessing(currLine, i, IC);
 	}
 
