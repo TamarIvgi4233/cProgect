@@ -6,6 +6,6 @@
 #define MAX_LINE_LENGTH 80
 #define IcStart 100
 lbl* label_search(char* );
+lbl * add_label(lbl* , char* , int *, symbol_type );
 
-void add_label(lbl* , char* , int* , symbol_type );
 bool valid_label_name(char* labelName);
