@@ -13,3 +13,4 @@ bool rightOperans(opcode , int );
 void extraWord(line , int , int* );
 void bin(char* , int );
 int binToDecimal(char* );
+bool is_instruction(char* str)
