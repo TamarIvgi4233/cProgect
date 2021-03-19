@@ -325,3 +325,48 @@ void label_free(lbl *head)
     }
     free(head);
 }
+char *intToString(int k)
+{
+    char *x;
+    int g;
+    int count,i,num;
+    char const digit[]="0123456789";
+    count=0;
+    g=k;
+    while(g>0)
+    {
+        g=g/10;
+        count++;
+    }
+    x=malloc(count* sizeof(char));
+    for(i=0;i<count;i++)
+    {
+        num=k/pow(10,count-1-i);
+        x[i]=digit[num%10];
+    }
+    return x;
+}
+int checkEntry(head)
+{
+    lbl *lblTmp;
+    lblTmp=head;
+    while(lblTmp!=NULL)
+	    {
+	     if(lblTmp.attribute==ENTRY)
+	         return 1;//true
+	     lblTmp=lblTmp->next;
+	    }
+	    return 0;//false;
+}
+int checkExternal(head)
+{
+    lbl *lblTmp;
+    lblTmp=head;
+    while(lblTmp!=NULL)
+	    {
+	     if(lblTmp.attribute==EXTERNAL)
+	         return 1;//true
+	     lblTmp=lblTmp->next;
+	    }
+	    return 0;//false;
+}
