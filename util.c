@@ -113,10 +113,10 @@ int binToDecimal(char* bin)
 	}
     return x;
 }
-void HexaNumber(char* hexaNum)
+char* HexaNumber(char* hexaNum)
 {
 
-	int i = 0;
+	int i = WRD_ARR_BITS_LEN-1;
 	int j, count = 2;
 	int sum = 0;
 	static char* hex = "0123456789ABCDEF";
@@ -129,7 +129,7 @@ void HexaNumber(char* hexaNum)
 				sum += (1 << j);
 
 			}
-			i += 1;
+			i -= 1;
 		}
 
 		hexaNum[count] = hex[sum];
