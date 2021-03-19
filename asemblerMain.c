@@ -99,7 +99,7 @@ bool fileProcess(char* fileName)
 		
 		if (succes) {
 			
-			/*succes = write_output; כאן צריך לשלוח ליצירת קטבי פלט*/
+			printing_to_files(fileName,head ,ICF,DCF);
 		}
 	}
 
