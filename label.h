@@ -9,3 +9,4 @@ lbl* label_search(char* );
 lbl * add_label(lbl* , char* , int *, symbol_type );
 
 bool valid_label_name(char* labelName);
+void updateAdrresslabel(int ,lbl* );
