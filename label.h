@@ -8,3 +8,4 @@
 lbl* label_search(char* );
 
 void add_label(lbl* , char* , int* , symbol_type );
+bool valid_label_name(char* labelName);
