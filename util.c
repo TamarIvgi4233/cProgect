@@ -8,15 +8,15 @@
 int ifItInt(char* string)
 {
 	int i = 0;
-	int bool=0;
-	if (string[0] == '-' || string[0] == '+') string++; 
+	
+	if (string[0] == '-' || string[0] == '+') string++;
 	for (; string[i]; i++)
 		if (!isdigit(string[i]))
 		{
-			return 1;
+			return 0;
 		}
-if(i > 0)return 0;
-else return 1;
+	if (i > 0)return 1;
+	else return 0;
 }
 int moveToNotWhiteSpace(line l, int i)
 {
@@ -256,7 +256,7 @@ void numberCod(char* num, char* binary)
 }
 addres_type  addressing_type(char* num)
 {
-	if (num[0] == '#' && is_int(num + 1))
+	if (num[0] == '#' && ifItInt(num + 1))
 	{
 		return IMMEDIATE;
 	}
