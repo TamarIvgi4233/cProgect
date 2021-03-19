@@ -76,7 +76,7 @@ void extraWord(line lineCode, int i, int* IC)
 	}
 	if (dest_address == IMMEDIATE)
 	{
-		if (lineCode.info[i] == '-' || lineCode.info[i] == '+')i += 1;
+		
 		Wrd binary;
 		numberCod(lineCode.info + i, binary.code);
 		
