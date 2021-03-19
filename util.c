@@ -192,12 +192,7 @@ void numberCod(char* num, char* binary)
 	int i = 1;
 	unsigned int sum = 0;
 	unsigned int number = 1;
-	if (num[1] == '-')
-	{
-		i = 2;
-		positve = false;
-	}
-
+	
 	while (num[i] != '\0')
 	{
 		sum *= 10;
@@ -206,12 +201,10 @@ void numberCod(char* num, char* binary)
 
 		i += 1;
 	}
-
-	i = 0;
-
+	i = WRD_ARR_BITS_LEN - 1;
 	if (positve)
 	{
-		while (i < WRD_ARR_BITS_LEN)
+		while (i >=0)
 		{
 			if (number & sum)
 			{
@@ -222,12 +215,12 @@ void numberCod(char* num, char* binary)
 				binary[i] = '0';
 			}
 			number <<= 1;
-			i += 1;
+			i -= 1;
 		}
 	}
 	else
 	{
-		while (i < WRD_ARR_BITS_LEN)
+		while (i >=0 )
 		{
 			if (!positve)
 			{
@@ -254,7 +247,7 @@ void numberCod(char* num, char* binary)
 				}
 			}
 			number <<= 1;
-			i += 1;
+			i -= 1;
 		}
 
 	}
