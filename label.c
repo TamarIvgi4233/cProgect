@@ -56,3 +56,14 @@ lbl * add_label(lbl* head, char* str, int *DC, symbol_type type)
 	}
 	return head;
 }
+bool valid_label_name(char* labelName)
+{
+	if( labelName[0] && strlen(labelName) <= 31 && isalpha(labelName[0]) )
+	{
+		int op, fun, reg;
+		op_funct_code(labelName, &op, &fun);
+		registerCod(labelName, &reg);
+		if (op == NONE_OP || reg== NONE_REG ||!is_instruction(labelName)) return true;
+	}
+	return false;
+}
