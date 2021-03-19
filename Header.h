@@ -5,6 +5,7 @@
 #define TABLE_SIZE (sizeof(lookuptable)/sizeof(code))
 #define MAX_LINE_LENGTH 80
 #define IcStart 100
+typedef enum boolean{false,true}bool;
 typedef struct Label {
 	char* symbole;
 	char* address;
