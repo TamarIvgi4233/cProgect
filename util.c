@@ -372,3 +372,73 @@ bool is_instruction(char* str)
 		return true;
 	else return false;
 }
+void printing_to_files(char* fileName,lbl *head ,int ICF,int DCF)
+{
+    FILE *obFile, *entFile, *extFile;
+	char *obFileName, *entFileName, *extFileName;
+	lbl *lblTmp;
+	int i=0;
+	obFileName=malloc(strlen(fileName)*sizeof(char));
+	strcpy(obFileName, fileName);
+	strcat(obFileName,".ob");
+	obFile=fopen(obFileName,"w");
+	fputs("    ",obFile);
+	fputs(intToString(ICF),obFile);
+	fputc(' ',obFile);
+	fputs(intToString(DCF),obFile);
+	fputc('\n',obFile);
+	while(i<=(ICF+DCF-1))
+	{
+	    fputs(cmd_arr[i].address,obFile);
+	    fputc(' ',obFile);
+	    fputs(HexaNumber(cmd_arr[i].word.code),obFile);
+	    fputc(' ',obFile);
+	    fputc(cmd_arr[i].tag,obFile);
+	    fputc('\n',obFile);
+	    i++;
+	}
+	free(obFile);
+	free(obFileName);
+	if(checkingEntry(head)==true)
+	{
+	    entFileName=malloc(strlen(fileName)*sizeof(char));
+	    strcpy(entFileName, fileName);
+	    strcat(entFileName,".ent");
+	    entFile=fopen(entFileName,"w");
+	    lblTmp=head;
+	    while(lblTmp!=NULL)
+	    {
+	     if(lblTmp->attribute==ENTRY)
+	     {
+	         fputs(lblTmp->symbole,entFile);
+	         fputc(' ',entFile);
+	         fputs(lblTmp->address,entFile);
+	         fputc('\n',entFile);
+	     }
+	     lblTmp=lblTmp->next;
+	    }
+	   free(entFile);
+	   free(entFileName); 
+	}
+	if(checkingExternal(head)==true)
+	{
+	    extFileName=malloc(strlen(fileName)*sizeof(char));
+	    strcpy(extFileName, fileName);
+	    strcat(extFileName,".ext");
+	    extFile=fopen(extFileName,"w");
+	    lblTmp=head;
+	    while(lblTmp!=NULL)
+	    {
+	     if(lblTmp->attribute==EXTERNAL)
+	     {
+	         fputs(lblTmp->symbole,extFile);
+	         fputc(' ',extFile);
+	         fputs(lblTmp->address,extFile);
+	         fputc('\n',extFile);
+	     }
+	     lblTmp=lblTmp->next;
+	    }
+	    free(extFileName);
+	    free(extFile); 
+	}
+}
