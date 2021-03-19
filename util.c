@@ -64,7 +64,7 @@ void extraWord(line lineCode, int i, int* IC)
 	
 	if (dest_address == REGISTER)
 	{
-		register reg = 0;
+		register* reg = (int *) malloc (sizeof(int));
 		registerCod(lineCode.info + i, reg);
 		newWord = cmd_builder(0,0, src_address, dest_address);
 		cmd_input_arr(*newWord, 'A', IC);
