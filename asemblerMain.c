@@ -100,6 +100,9 @@ bool fileProcess(char* fileName)
 		if (succes) {
 			
 			printing_to_files(fileName,head ,ICF,DCF);
+			data_free_arr();
+			cmd_free_arr();
+			label_free();
 		}
 	}
 
