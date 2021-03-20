@@ -58,7 +58,7 @@ bool proceesLine(line currLine, int* DC, int* IC, lbl* head)
 		{
 			if (addLabel)
 			{
-				add_label(head, lableName, DC, DATA);
+				head=add_label(head, lableName, DC, DATA);
 			}
 			proceesSuccessful = processData(currLine, i, DC);
 		}
@@ -66,7 +66,7 @@ bool proceesLine(line currLine, int* DC, int* IC, lbl* head)
 		{
 			if (addLabel)
 			{
-				add_label(head, lableName, DC, STRING);
+				head=add_label(head, lableName, DC, STRING);
 			}
 			proceesSuccessful = processString(currLine, i, DC);
 		}
@@ -99,7 +99,7 @@ bool proceesLine(line currLine, int* DC, int* IC, lbl* head)
 				lableName[j] = currLine.info[i];
 			}
 			lableName[j] = '\n';
-			add_label(head, lableName, 0, EXTERN);
+			head=add_label(head, lableName, 0, EXTERN);
 
 
 		}
