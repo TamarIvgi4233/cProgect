@@ -14,3 +14,4 @@
 
 bool SecondProceesLine(line , int* , int* , lbl* );
 bool SecondCodeProcessing(line , int , int* );
+void updateAdrressData(int );
