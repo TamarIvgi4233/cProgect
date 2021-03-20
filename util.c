@@ -5,7 +5,7 @@
 #include <string.h>
 #include "Header.h"
 #include "util.h"
-int ifItInt(char* string)
+bool ifItInt(char* string)
 {
 	int i = 0;
 	
@@ -13,10 +13,10 @@ int ifItInt(char* string)
 	for (; string[i]; i++)
 		if (!isdigit(string[i]))
 		{
-			return 0;
+			return false;
 		}
-	if (i > 0)return 1;
-	else return 0;
+	if (i > 0)return true;
+	else return false;
 }
 int moveToNotWhiteSpace(line l, int i)
 {
@@ -36,7 +36,7 @@ int countOperands(line l, int i)
 	}
 	return count;
 }
-int rightOperans(opcode op, int number)
+bool rightOperans(opcode op, int number)
 {
 	if (op<5)
 	{
@@ -52,7 +52,7 @@ int rightOperans(opcode op, int number)
 	}
 	else
 	{
-		return 1;
+		return false;
 	}
 }
 void extraWord(line lineCode, int i, int* IC)
